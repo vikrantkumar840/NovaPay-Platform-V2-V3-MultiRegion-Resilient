@@ -9,3 +9,10 @@ variable "aws_region" {
 variable "environment" {
   default = "primary"
 }
+variable "node_role_arn" {
+  type = string
+}
+
+variable "private_subnet_ids" {
+  type = list(string)
+}
