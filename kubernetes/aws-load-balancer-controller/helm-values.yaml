@@ -1,0 +1,11 @@
+clusterName: novapay-primary-eks
+
+serviceAccount:
+  create: false
+  name: aws-load-balancer-controller
+
+region: ap-south-1
+
+vpcId: vpc-xxxxxxxx
+
+replicaCount: 2
