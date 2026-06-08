@@ -1,0 +1,14 @@
+replicas: 2
+
+persistence:
+  enabled: true
+  size: 10Gi
+
+adminUser: admin
+
+service:
+  type: ClusterIP
+
+grafana.ini:
+  server:
+    root_url: https://grafana.novapay.internal

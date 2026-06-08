@@ -1,0 +1,9 @@
+loki:
+  auth_enabled: false
+
+singleBinary:
+  replicas: 2
+
+persistence:
+  enabled: true
+  size: 20Gi
