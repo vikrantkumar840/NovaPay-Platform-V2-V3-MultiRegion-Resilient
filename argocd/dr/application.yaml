@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: novapay-dr
+
+spec:
+  project: novapay-dr
+
+  source:
+    repoURL: https://github.com/vikrantkumar840/NovaPay-Platform-V2-MultiRegion-Resilient.git
+    targetRevision: main
+    path: kubernetes/secondary
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: novapay
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
