@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: novapay-rollout
+
+spec:
+  replicas: 4
+
+  selector:
+    matchLabels:
+      app: novapay
+
+  template:
+    metadata:
+      labels:
+        app: novapay
+
+    spec:
+      containers:
+      - name: novapay
+        image: novapay:v1
+
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause:
+          duration: 60s
+
+      - setWeight: 50
+      - pause:
+          duration: 120s
+
+      - setWeight: 100
