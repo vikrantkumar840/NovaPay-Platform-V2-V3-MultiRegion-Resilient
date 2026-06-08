@@ -1,0 +1,13 @@
+autoDiscovery:
+  clusterName: novapay-primary-eks
+
+awsRegion: ap-south-1
+
+replicaCount: 2
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: false
+  name: cluster-autoscaler
