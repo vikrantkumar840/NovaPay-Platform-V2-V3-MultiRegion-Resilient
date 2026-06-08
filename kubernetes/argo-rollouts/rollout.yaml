@@ -18,8 +18,7 @@ spec:
     spec:
       containers:
       - name: novapay
-        image: novapay:v1
-
+        image: 187478112406.dkr.ecr.ap-south-1.amazonaws.com/novapay:stable
   strategy:
     canary:
       steps:
