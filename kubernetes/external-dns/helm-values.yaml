@@ -1,0 +1,18 @@
+provider: aws
+
+policy: sync
+
+registry: txt
+
+txtOwnerId: novapay
+
+serviceAccount:
+  create: false
+  name: external-dns
+
+domainFilters:
+  - novapay.example.com
+
+sources:
+  - service
+  - ingress
