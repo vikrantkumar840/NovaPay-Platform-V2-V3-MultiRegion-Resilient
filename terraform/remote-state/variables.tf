@@ -3,7 +3,7 @@ variable "aws_region" {
 }
 
 variable "bucket_name" {
-  default = "novapay-v2-terraform-state"
+  default = "novapay-v2-terraform-state-187478112406"
 }
 
 variable "lock_table_name" {

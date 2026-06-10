@@ -40,6 +40,8 @@ resource "aws_subnet" "public_az1" {
   tags = {
     Name = "public-az1"
     Tier = "public"
+    
+    "kubernetes.io/role/elb" = "1"  
   }
 }
 
@@ -51,7 +53,9 @@ resource "aws_subnet" "public_az2" {
 
   tags = {
     Name = "public-az2"
+
     Tier = "public"
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
@@ -62,7 +66,9 @@ resource "aws_subnet" "private_az1" {
 
   tags = {
     Name = "private-az1"
-    Tier = "private"
+    Tier = "pr"
+
+    "kubernetes.io/role/internal-elb" = "1" 
   }
 }
 
@@ -74,6 +80,8 @@ resource "aws_subnet" "private_az2" {
   tags = {
     Name = "private-az2"
     Tier = "private"
+
+    "kubernetes.io/role/internal-elb" = "1"  
   }
 }
 resource "aws_eip" "nat" {
