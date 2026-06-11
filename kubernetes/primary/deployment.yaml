@@ -4,7 +4,7 @@ metadata:
   name: novapay
   namespace: novapay
 spec:
-  replicas: 1
+  replicas: 10
 
   selector:
     matchLabels:
@@ -19,6 +19,14 @@ spec:
       containers:
       - name: novapay
         image: nginx:latest
+        
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limit:
+            cpu: "1"
+            memory: "1Gi"
 
         ports:
         - containerPort: 80
