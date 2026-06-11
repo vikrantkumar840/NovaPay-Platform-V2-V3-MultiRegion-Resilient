@@ -15,7 +15,7 @@ resource "aws_network_acl_rule" "private_ingress_https" {
 
   rule_action = "allow"
 
-  cidr_block = "10.0.0.0/8"
+  cidr_block = "10.0.0.0/16"
 
   from_port = 443
   to_port   = 443

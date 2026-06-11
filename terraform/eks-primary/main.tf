@@ -12,13 +12,10 @@ provider "aws" {
 
 resource "aws_eks_cluster" "primary" {
   name     = var.cluster_name
-  role_arn = "arn:aws:iam::123456789012:role/eks-cluster-role"
+  role_arn = var.cluster_role_arn
 
   vpc_config {
-    subnet_ids = [
-      "subnet-11111111",
-      "subnet-22222222"
-    ]
+    subnet_ids = var.private_subnet_ids
   }
 
   tags = {
