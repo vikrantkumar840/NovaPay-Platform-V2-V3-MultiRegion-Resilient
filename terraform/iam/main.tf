@@ -47,3 +47,33 @@ resource "aws_iam_role_policy_attachment" "cni_policy" {
   role       = aws_iam_role.eks_node_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
 }
+
+resource "aws_iam_role" "s3_replication" {
+  name = "novapay-s3-crr-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "s3.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_s3_bucket_replication_configuration" "replication" {
+  role   = aws_iam_role.s3_replication.arn
+  bucket = aws_s3_bucket.primary.id
+
+  rule {
+    id     = "replicate-to-dr"
+    status = "Enabled"
+
+    destination {
+      bucket        = aws_s3_bucket.dr.arn
+      storage_class = "STANDARD"
+    }
+  }
+}

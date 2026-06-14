@@ -39,8 +39,8 @@ resource "aws_subnet" "public_az1" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "dr-public-az1"
-    Tier = "public"
+    Name                     = "dr-public-az1"
+    Tier                     = "public"
     "kubernetes.io/role/elb" = "1"
   }
 }
@@ -52,8 +52,8 @@ resource "aws_subnet" "public_az2" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "dr-public-az2"
-    Tier = "public"
+    Name                     = "dr-public-az2"
+    Tier                     = "public"
     "kubernetes.io/role/elb" = "1"
   }
 }
@@ -64,8 +64,8 @@ resource "aws_subnet" "private_az1" {
   availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
-    Name = "dr-private-az1"
-    Tier = "private"
+    Name                              = "dr-private-az1"
+    Tier                              = "private"
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
@@ -76,8 +76,8 @@ resource "aws_subnet" "private_az2" {
   availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = {
-    Name = "dr-private-az2"
-    Tier = "private"
+    Name                              = "dr-private-az2"
+    Tier                              = "private"
     "kubernetes.io/role/internal-elb" = "1"
 
   }
@@ -92,7 +92,7 @@ resource "aws_eip" "nat" {
 }
 
 resource "aws_nat_gateway" "dr" {
-  allocation_id = aws_eip.nat.id
+  allocation_id = aws_eip.nat.allocation_id
   subnet_id     = aws_subnet.public_az1.id
 
   depends_on = [

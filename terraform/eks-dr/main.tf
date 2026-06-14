@@ -12,14 +12,15 @@ provider "aws" {
 
 resource "aws_eks_cluster" "dr" {
   name     = var.cluster_name
-  role_arn = "arn:aws:iam::123456789012:role/eks-dr-cluster-role"
+  role_arn = var.cluster_role_arn
+
 
   vpc_config {
-    subnet_ids = [
-      "subnet-aaaa1111",
-      "subnet-bbbb2222"
-    ]
-  }
+     subnet_ids = [
+  data.terraform_remote_state.dr_network.outputs.dr_private_subnet_1_id,
+  data.terraform_remote_state.dr_network.outputs.dr_private_subnet_2_id
+]  
+}
 
   tags = {
     Environment = var.environment

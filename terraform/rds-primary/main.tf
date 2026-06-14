@@ -10,23 +10,15 @@ provider "aws" {
   region = "ap-south-1"
 }
 
+  
 resource "aws_rds_cluster" "primary" {
-  cluster_identifier = var.cluster_identifier
-
-  engine         = var.engine
-  engine_version = var.engine_version
-
-  database_name   = var.database_name
+  cluster_identifier = "novapay-primary-db"
+  engine            = "aurora-postgresql"
+  db_subnet_group_name = aws_db_subnet_group.primary.name
   master_username = var.master_username
+  master_password = var.master_password
 
-  manage_master_user_password = true
-
-  backup_retention_period = 7
-
-  storage_encrypted = true
-
-  skip_final_snapshot = true
-
+  database_name = "novapay"
   tags = {
     Environment = var.environment
     Project     = "NovaPay-V2"
@@ -42,3 +34,9 @@ resource "aws_rds_cluster_instance" "writer" {
   engine         = aws_rds_cluster.primary.engine
   engine_version = aws_rds_cluster.primary.engine_version
 }
+resource "aws_db_subnet_group" "primary" {
+  name = "primary-db-subnet"
+
+  subnet_ids = var.private_subnet_ids
+}
+

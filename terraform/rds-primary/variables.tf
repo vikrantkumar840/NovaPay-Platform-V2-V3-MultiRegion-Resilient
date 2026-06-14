@@ -18,6 +18,16 @@ variable "master_username" {
   default = "dbadmin"
 }
 
+
+variable "master_password" {
+  sensitive = true
+}
+
+variable "private_subnet_ids" {
+  type = list(string)
+
+}
+
 variable "environment" {
   default = "primary"
 }

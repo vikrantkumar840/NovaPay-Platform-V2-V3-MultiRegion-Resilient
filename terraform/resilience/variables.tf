@@ -27,3 +27,7 @@ variable "dr_bucket_name" {
   type        = string
   default     = "novapay-dr-backups"
 }
+variable "replication_enabled" {
+  type    = bool
+  default = true
+}

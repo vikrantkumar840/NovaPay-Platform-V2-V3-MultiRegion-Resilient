@@ -3,12 +3,16 @@ resource "aws_eks_node_group" "primary" {
   node_group_name = "primary-workers"
   node_role_arn   = var.node_role_arn
 
-  subnet_ids = var.private_subnet_ids
 
+  subnet_ids = data.terraform_remote_state.network.outputs.private_subnets
+
+  depends_on = [
+    aws_eks_cluster.primary
+  ]
   scaling_config {
     desired_size = 2
     min_size     = 1
-    max_size     = 2
+    max_size     = 4
   }
 
   instance_types = ["t3.small"]

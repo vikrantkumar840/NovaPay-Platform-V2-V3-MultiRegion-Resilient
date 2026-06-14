@@ -5,3 +5,5 @@ output "dr_cluster_name" {
 output "dr_cluster_endpoint" {
   value = aws_eks_cluster.dr.endpoint
 }
+
+

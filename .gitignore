@@ -22,3 +22,7 @@ override.tf.json
 
 # OS
 .DS_Store
+
+terraform.tfvars
+*.tfvars
+**/state.json
