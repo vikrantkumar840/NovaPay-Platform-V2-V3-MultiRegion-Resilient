@@ -3,7 +3,7 @@ resource "aws_eks_node_group" "dr" {
   node_group_name = "dr-workers"
   node_role_arn   = var.node_role_arn
 
-  subnet_ids = var.private_subnet_ids
+  subnet_ids = data.terraform_remote_state.dr_network.outputs.dr_private_subnets
 
   scaling_config {
     desired_size = 1
@@ -11,7 +11,7 @@ resource "aws_eks_node_group" "dr" {
     max_size     = 2
   }
 
-  instance_types = ["t3.medium"]
+  instance_types = ["t3.small"]
 
   capacity_type = "ON_DEMAND"
 
@@ -21,20 +21,7 @@ resource "aws_eks_node_group" "dr" {
   }
 }
 
-resource "aws_ecr_replication_configuration" "replication" {
-  replication_configuration {
-    rule {
-      destination {
-        region      = "ap-south-2"
-        registry_id = "187478112406"
-      }
-      repository_filter {
-        filter      = "*"
-        filter_type = "PREFIX_MATCH"
-      }
-    }
-  }
-}
+
 data "terraform_remote_state" "dr_network" {
   backend = "s3"
 

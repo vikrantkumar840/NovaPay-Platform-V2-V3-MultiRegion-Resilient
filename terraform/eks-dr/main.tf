@@ -16,11 +16,11 @@ resource "aws_eks_cluster" "dr" {
 
 
   vpc_config {
-     subnet_ids = [
-  data.terraform_remote_state.dr_network.outputs.dr_private_subnet_1_id,
-  data.terraform_remote_state.dr_network.outputs.dr_private_subnet_2_id
-]  
-}
+    subnet_ids = [
+      data.terraform_remote_state.dr_network.outputs.dr_private_subnet_1_id,
+      data.terraform_remote_state.dr_network.outputs.dr_private_subnet_2_id
+    ]
+  }
 
   tags = {
     Environment = var.environment
