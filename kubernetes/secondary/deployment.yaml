@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
       - name: novapay
-        image: nginx:latest
-        
+        image: 187478112406.dkr.ecr.us-east-1.amazonaws.com/novapay-app:2.0.0
+        imagePullPolicy: Always        
         resources:
           requests:
             cpu: "500m"
