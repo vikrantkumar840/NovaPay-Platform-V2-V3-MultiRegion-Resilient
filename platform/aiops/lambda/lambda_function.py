@@ -1,8 +1,18 @@
+import json
+
 def lambda_handler(event, context):
 
-    print("CloudWatch Event Received")
+    incident = json.dumps(event)
+
+    summary = {
+        "root_cause": "Unknown",
+        "impact": "Service degradation",
+        "recommendation": "Investigate logs"
+    }
+
+    print(summary)
 
     return {
         "statusCode": 200,
-        "body": "Incident processed"
+        "body": json.dumps(summary)
     }
