@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: alertmanager-config
+  namespace: monitoring
+stringData:
+  alertmanager.yaml: |
+    route:
+      receiver: pagerduty
+
+    receivers:
+    - name: pagerduty
+      pagerduty_configs:
+      - routing_key: "<PAGERDUTY_INTEGRATION_KEY>"
