@@ -30,3 +30,20 @@ spec:
 
         ports:
         - containerPort: 80
+        env:
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: novapay-db-secret
+                key: username
+
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: novapay-db-secret
+                key: password
+
+    valueFrom:
+      secretKeyRef:
+        name: novapay-db-secret
+        key: password

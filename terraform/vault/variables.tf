@@ -1,3 +1,16 @@
+variable "cluster_name" {
+  type = string
+}
 
-variable "oidc_provider_arn" {}
-variable "oidc_provider" {}
+variable "aws_region" {
+  type    = string
+  default = "ap-south-1"
+}
+
+variable "oidc_provider_arn" {
+  type = string
+}
+
+variable "oidc_provider_url" {
+  type = string
+}

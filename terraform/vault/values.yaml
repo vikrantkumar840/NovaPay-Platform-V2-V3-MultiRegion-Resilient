@@ -10,6 +10,9 @@ server:
     enabled: true
     size: 10Gi
 
+  auditStorage:
+    enabled: true
+
 ui:
   enabled: true
 

@@ -1,5 +1,5 @@
 resource "aws_iam_role" "vault_irsa" {
-  name = "vault-irsa-role"
+  name = "novapay-vault-irsa-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -11,7 +11,8 @@ resource "aws_iam_role" "vault_irsa" {
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringEquals = {
-          "${var.oidc_provider}:sub" = "system:serviceaccount:vault:vault"
+          "${replace(var.oidc_provider_url, "https://", "")}:sub" =
+          "system:serviceaccount:vault:vault"
         }
       }
     }]
