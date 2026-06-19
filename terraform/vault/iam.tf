@@ -11,8 +11,7 @@ resource "aws_iam_role" "vault_irsa" {
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringEquals = {
-          "${replace(var.oidc_provider_url, "https://", "")}:sub" =
-          "system:serviceaccount:vault:vault"
+          "${replace(var.oidc_provider_url, "https://", "")}:sub" = "system:serviceaccount:vault:vault"
         }
       }
     }]

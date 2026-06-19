@@ -63,17 +63,4 @@ resource "aws_iam_role" "s3_replication" {
   })
 }
 
-resource "aws_s3_bucket_replication_configuration" "replication" {
-  role   = aws_iam_role.s3_replication.arn
-  bucket = aws_s3_bucket.primary.id
 
-  rule {
-    id     = "replicate-to-dr"
-    status = "Enabled"
-
-    destination {
-      bucket        = aws_s3_bucket.dr.arn
-      storage_class = "STANDARD"
-    }
-  }
-}

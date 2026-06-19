@@ -6,12 +6,16 @@ resource "aws_iam_role" "velero_role" {
     Statement = [{
       Effect = "Allow"
       Principal = {
-        Service = "ec2.amazonaws.com"
+          Federated = "arn:aws:iam::187478112406:oidc-provider/oidc.eks.ap-south-1.amazonaws.com/id/FF776093641E2EC246279870B47FBE48"     
+        }
+      Condition = {
+        StringEquals = {
+          "oidc.eks.ap-south-1.amazonaws.com/id/FF776093641E2EC246279870B47FBE48:sub" = "system:serviceaccount:velero:velero"
+        }
       }
       Action = "sts:AssumeRole"
     }]
   })
-
   tags = local.common_tags
 }
 

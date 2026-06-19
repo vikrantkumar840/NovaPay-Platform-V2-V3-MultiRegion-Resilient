@@ -10,33 +10,55 @@ provider "aws" {
   region = "ap-south-1"
 }
 
-  
-resource "aws_rds_cluster" "primary" {
-  cluster_identifier = "novapay-primary-db"
-  engine            = "aurora-postgresql"
-  db_subnet_group_name = aws_db_subnet_group.primary.name
-  master_username = var.master_username
-  master_password = var.master_password
+resource "aws_security_group" "rds" {
+  name        = "novapay-rds-sg"
+  description = "RDS Security Group"
+  vpc_id      = data.terraform_remote_state.network.outputs.vpc_id
 
-  database_name = "novapay"
-  tags = {
-    Environment = var.environment
-    Project     = "NovaPay-V2"
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
-resource "aws_rds_cluster_instance" "writer" {
-  identifier         = "novapay-primary-writer"
-  cluster_identifier = aws_rds_cluster.primary.id
 
-  instance_class = "db.t3.medium"
+resource "aws_db_instance" "primary" {
+  identifier        = "novapay-primary-db"
+  engine            = "postgres"
+  engine_version    = "15.4"
+  instance_class    = "db.t3.medium"
 
-  engine         = aws_rds_cluster.primary.engine
-  engine_version = aws_rds_cluster.primary.engine_version
+  db_name           = "novapay"
+  username          = var.master_username
+  password          = var.master_password
+
+  db_subnet_group_name = aws_db_subnet_group.primary.name
+  vpc_security_group_ids = [aws_security_group.rds.id]
+
+  allocated_storage = 20
+  skip_final_snapshot = true
 }
 resource "aws_db_subnet_group" "primary" {
   name = "primary-db-subnet"
 
   subnet_ids = var.private_subnet_ids
+}
+terraform {
+  backend "s3" {
+    bucket         = "novapay-v2-terraform-state-187478112406"
+    key            = "primary-region/terraform.tfstate"
+    region         = "ap-south-1"
+    dynamodb_table = "novapay-terraform-locks"
+    encrypt        = true
+  }
 }
 

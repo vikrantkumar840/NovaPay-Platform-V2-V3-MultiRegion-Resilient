@@ -1,36 +1,11 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-    }
-  }
+data "aws_eks_cluster" "primary" {
+  name = var.primary_cluster_name
 }
 
-locals {
-  common_tags = {
-    Project     = var.project_name
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Component   = "OIDC"
-  }
-}
+resource "aws_iam_openid_connect_provider" "eks" {
+  url = data.aws_eks_cluster.primary.identity[0].oidc[0].issuer
 
-# Placeholder OIDC architecture foundation
+  client_id_list = ["sts.amazonaws.com"]
 
-resource "aws_iam_policy" "irsa_foundation" {
-  name        = "novapay-irsa-foundation"
-  description = "Foundation policy for future IRSA integrations"
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Action = [
-        "sts:AssumeRoleWithWebIdentity"
-      ]
-      Resource = "*"
-    }]
-  })
-
-  tags = local.common_tags
+  thumbprint_list = ["9e99a48a9960b14926bb7f3b02e22da0ecd1e0d9"]
 }

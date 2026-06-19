@@ -1,184 +1,489 @@
-# NovaPay Platform V2 – Multi-Region Resilient Architecture
+# NovaPay Platform V2/V3 – Multi-Region Resilient Cloud-Native Architecture
 
 ## Overview
 
-NovaPay Platform V2 is a production-grade Multi-Region Disaster Recovery (DR) architecture designed for a high-volume payment processing platform operating under strict availability, security, compliance, and data sovereignty requirements.
+NovaPay Platform V2/V3 is an enterprise-grade cloud-native payment platform designed using modern DevSecOps, GitOps, Multi-Region Disaster Recovery, Zero-Downtime Deployment, Infrastructure as Code, and AI-driven operational automation principles.
 
-This project demonstrates the design and implementation of a resilient cloud-native payment infrastructure capable of sustaining regional outages while maintaining business continuity, regulatory compliance, and transaction integrity.
+The platform demonstrates how large-scale fintech systems can achieve:
 
-The architecture is designed to achieve:
+- High Availability (HA)
+- Disaster Recovery (DR)
+- Security by Design
+- Automated Infrastructure Provisioning
+- GitOps Continuous Delivery
+- Kubernetes-based Scalability
+- Cloud-Native Observability
+- Secrets Management
+- AI-Assisted Operations
 
-* 99.99% Service Availability
-* Recovery Time Objective (RTO) < 5 Minutes
-* Recovery Point Objective (RPO) < 1 Minute
-* Automated Regional Failover
-* Zero-Touch GitOps Operations
-* Compliance-Driven Infrastructure Design
-
----
-
-## Architecture Objectives
-
-### High Availability
-
-* Multi-Region AWS deployment strategy
-* Active-Passive Disaster Recovery architecture
-* Automated traffic failover using Route53 health checks
-* Cross-region workload recovery
-
-### Data Resilience
-
-* Aurora PostgreSQL Global Database replication
-* DynamoDB Global Tables
-* Cross-region object replication
-* Distributed event streaming replication
-
-### Kubernetes Platform
-
-* Multi-cluster Kubernetes deployment
-* GitOps-driven application delivery
-* Horizontal Pod Autoscaling (HPA)
-* Pod Disruption Budgets (PDB)
-* Network Segmentation Policies
-
-### Security & Compliance
-
-* PCI-DSS aligned network isolation
-* End-to-end TLS encryption
-* AES-256 encryption at rest
-* AWS KMS managed keys
-* Least-Privilege IAM model
-* Security scanning and policy enforcement
-
-### Observability
-
-* Prometheus Metrics Collection
-* Grafana Dashboards
-* Alertmanager Notifications
-* Centralized Logging
-* Disaster Recovery Health Monitoring
+The entire platform is built on AWS using Terraform, Amazon EKS, ArgoCD, Vault, External Secrets, Aurora PostgreSQL, Route53, Global Accelerator, and various cloud-native technologies.
 
 ---
 
-## Technology Stack
+# Architecture Goals
 
-| Layer                  | Technology                 |
-| ---------------------- | -------------------------- |
-| Cloud Platform         | AWS                        |
-| Container Platform     | Kubernetes                 |
-| GitOps                 | ArgoCD                     |
-| Infrastructure as Code | Terraform                  |
-| Database               | Aurora PostgreSQL          |
-| NoSQL                  | DynamoDB                   |
-| Cache                  | Redis                      |
-| Messaging              | Apache Kafka               |
-| Monitoring             | Prometheus                 |
-| Visualization          | Grafana                    |
-| DNS Failover           | Route53                    |
-| Security               | IAM, KMS, Network Policies |
-| CI/CD                  | GitHub Actions             |
+## Reliability
+
+Design a resilient architecture capable of surviving:
+
+- Availability Zone failures
+- Node failures
+- Application failures
+- Regional outages
+- Database failures
+
+without impacting customer transactions.
 
 ---
 
-## Repository Structure
+## Scalability
 
-```text
-terraform/
-├── global/
-├── primary-region/
-└── dr-region/
+The platform automatically scales using:
 
-kubernetes/
-├── primary/
-├── secondary/
-├── autoscaling/
-└── network-policies/
+- Kubernetes Horizontal Pod Autoscaler
+- Cluster Autoscaler
+- Multi-AZ Infrastructure
+- Elastic AWS Services
 
-argocd/
-├── primary/
-└── dr/
-
-monitoring/
-├── prometheus/
-├── grafana/
-├── alertmanager/
-└── loki/
-
-disaster-recovery/
-├── runbooks/
-├── failover/
-├── failback/
-└── dr-drills/
-
-compliance/
-├── pci-dss/
-├── rbi/
-└── npci/
-
-architecture/
-├── diagrams/
-├── replication-strategy/
-└── fmea/
-```
+allowing workloads to scale based on demand.
 
 ---
 
-## Disaster Recovery Strategy
+## Security
+
+Security is integrated into every layer:
+
+- IAM Least Privilege
+- IRSA (IAM Roles for Service Accounts)
+- HashiCorp Vault
+- AWS Secrets Manager
+- Network Segmentation
+- Security Groups
+- Private Subnets
+- Encrypted Storage
+- Backup & Recovery
+
+---
+
+## Automation
+
+Everything is provisioned using Infrastructure as Code.
+
+Terraform manages:
+
+- Networking
+- EKS Clusters
+- IAM
+- Security
+- Storage
+- Disaster Recovery Components
+- Global Traffic Routing
+
+No manual cloud provisioning is required.
+
+---
+
+# Core Components
+
+## Networking Layer
 
 ### Primary Region
 
-AWS Mumbai (ap-south-1)
+- Dedicated VPC
+- Public Subnets
+- Private Subnets
+- Internet Gateway
+- NAT Gateway
+- Route Tables
 
-### Disaster Recovery Region
+### DR Region
 
-AWS Hyderabad (ap-south-2)
+Independent disaster recovery infrastructure with isolated networking.
 
-### Key Recovery Mechanisms
+Benefits:
 
-* Cross-region database replication
-* DNS failover automation
-* Health-check driven traffic routing
-* Automated cluster recovery
-* Infrastructure reproducibility through Terraform
-* GitOps-based workload synchronization
-
----
-
-## Key Deliverables
-
-* Multi-Region Infrastructure Architecture
-* Disaster Recovery Runbooks
-* Failover & Failback Procedures
-* Compliance Mapping Matrix
-* FMEA Risk Assessment
-* Observability Framework
-* Capacity & Resilience Planning
-* GitOps Deployment Strategy
+- Fault isolation
+- Regional resilience
+- Business continuity
 
 ---
 
-## Status
+## Kubernetes Platform
 
-🚧 Project In Progress
+### Primary EKS Cluster
 
-Current Phase:
-Foundation Architecture & Infrastructure Design
+Hosts production workloads.
 
-Upcoming Phases:
+Features:
 
-* Multi-Region Network Design
-* Kubernetes Cluster Deployment
-* Database Replication Strategy
-* Route53 Failover Automation
-* GitOps Implementation
-* DR Testing & Validation
-* Compliance Validation
+- Managed Node Groups
+- Auto Scaling
+- GitOps Deployments
+- Private Networking
+
+### DR EKS Cluster
+
+Maintains recovery environment.
+
+Features:
+
+- Disaster Recovery readiness
+- Application failover capability
+- Cross-region recovery
 
 ---
 
-## Author
+## GitOps Delivery
 
-Vikrant Kumar
+### ArgoCD
 
-DevOps | Cloud | Kubernetes | GitOps | Site Reliability Engineering | Disaster Recovery Architecture
+ArgoCD continuously synchronizes:
 
+Git Repository → Kubernetes Cluster
+
+Benefits:
+
+- Declarative deployments
+- Rollback capability
+- Change auditing
+- Reduced operational errors
+
+---
+
+## Progressive Delivery
+
+### Argo Rollouts
+
+Provides:
+
+- Canary Deployments
+- Blue-Green Deployments
+- Traffic Splitting
+- Zero Downtime Releases
+
+Benefits:
+
+- Reduced deployment risk
+- Faster recovery
+- Production validation
+
+---
+
+# Database Layer
+
+## Aurora PostgreSQL
+
+Designed for:
+
+- High Availability
+- Automated Backups
+- Fault Tolerance
+- Multi-AZ Deployment
+
+Features:
+
+- Automated snapshots
+- Disaster recovery integration
+- Secure private access
+
+---
+
+# Secrets Management
+
+## HashiCorp Vault
+
+Centralized secret storage.
+
+Stores:
+
+- Database Credentials
+- API Keys
+- Application Secrets
+- Service Credentials
+
+Benefits:
+
+- Secret rotation
+- Auditability
+- Reduced credential exposure
+
+---
+
+## External Secrets Operator
+
+Synchronizes secrets from:
+
+- Vault
+- AWS Secrets Manager
+
+into Kubernetes Secrets automatically.
+
+---
+
+# Security Architecture
+
+## IAM
+
+Implements:
+
+- Principle of Least Privilege
+- Role Separation
+- IRSA Authentication
+
+---
+
+## IRSA
+
+IAM Roles for Service Accounts allows Kubernetes workloads to access AWS services securely without static credentials.
+
+Used by:
+
+- AWS Load Balancer Controller
+- External Secrets
+- Velero
+- Cluster Autoscaler
+
+Benefits:
+
+- Credential elimination
+- Improved security posture
+- Fine-grained permissions
+
+---
+
+# Load Balancing
+
+## AWS Load Balancer Controller
+
+Automatically provisions:
+
+- Application Load Balancers (ALB)
+- Ingress Routing
+- TLS Termination
+
+Benefits:
+
+- Kubernetes-native traffic management
+- Dynamic provisioning
+- Simplified operations
+
+---
+
+# Observability
+
+## Monitoring Stack
+
+Includes:
+
+- Prometheus
+- CloudWatch
+- Metrics Server
+
+Monitors:
+
+- Cluster Health
+- Node Health
+- Application Metrics
+- Resource Utilization
+
+---
+
+## Alerting
+
+Integrated alerting for:
+
+- Infrastructure failures
+- Performance degradation
+- Operational incidents
+
+---
+
+# Backup & Recovery
+
+## Velero
+
+Provides:
+
+- Cluster Backups
+- Resource Recovery
+- Disaster Recovery Operations
+
+Benefits:
+
+- Fast restoration
+- Recovery automation
+- Reduced downtime
+
+---
+
+## S3 Cross-Region Replication
+
+Protects critical backup data by replicating backups to secondary AWS regions.
+
+---
+
+# Global Resilience
+
+## Route53 Failover
+
+Provides:
+
+- DNS-Based Failover
+- Health Checks
+- Automatic Traffic Redirection
+
+---
+
+## AWS Global Accelerator
+
+Enhances:
+
+- Global Availability
+- Traffic Routing
+- Application Performance
+
+Benefits:
+
+- Faster user experience
+- Regional failover
+- Reduced latency
+
+---
+
+# AI-Powered Operations (AIOps)
+
+NovaPay V3 extends traditional DevOps by introducing AI-driven operational intelligence.
+
+## AI Incident Analysis
+
+AI systems analyze:
+
+- Infrastructure failures
+- Application crashes
+- Performance anomalies
+- Operational alerts
+
+to accelerate troubleshooting.
+
+---
+
+## AI-Assisted Disaster Recovery
+
+AI-driven workflows can:
+
+- Recommend recovery actions
+- Analyze outage patterns
+- Generate recovery procedures
+- Improve recovery time objectives
+
+---
+
+## AI Knowledge Base
+
+Centralized operational intelligence repository containing:
+
+- Runbooks
+- Incident History
+- Recovery Procedures
+- Operational Documentation
+
+Used to support intelligent troubleshooting and decision-making.
+
+---
+
+# Benefits of the Architecture
+
+## Business Benefits
+
+- Reduced Downtime
+- Faster Recovery
+- Increased Availability
+- Improved Customer Experience
+- Lower Operational Risk
+
+---
+
+## Engineering Benefits
+
+- Fully Automated Infrastructure
+- GitOps Deployments
+- Zero Downtime Releases
+- Secure Secrets Management
+- Disaster Recovery Readiness
+
+---
+
+## Security Benefits
+
+- Least Privilege Access
+- Secret Rotation
+- Identity-Based Authentication
+- Reduced Attack Surface
+
+---
+
+# Technologies Used
+
+## Cloud
+
+- AWS
+
+## Infrastructure as Code
+
+- Terraform
+
+## Containers
+
+- Docker
+- Kubernetes
+
+## Container Orchestration
+
+- Amazon EKS
+
+## GitOps
+
+- ArgoCD
+
+## Progressive Delivery
+
+- Argo Rollouts
+
+## Secrets Management
+
+- HashiCorp Vault
+- AWS Secrets Manager
+- External Secrets Operator
+
+## Observability
+
+- Prometheus
+- CloudWatch
+- Metrics Server
+
+## Disaster Recovery
+
+- Velero
+- Route53 Failover
+- Global Accelerator
+
+## Security
+
+- IAM
+- IRSA
+- Security Groups
+- Network Segmentation
+
+## AI Operations
+
+- AI Incident Analysis
+- AI Disaster Recovery Assistant
+- Knowledge Base Automation
+
+---
+
+# Project Outcome
+
+NovaPay Platform V2/V3 demonstrates a production-grade, enterprise-scale cloud architecture capable of delivering secure, highly available, resilient, and intelligent financial services across multiple AWS regions.
+
+The platform combines DevSecOps, GitOps, Disaster Recovery, Cloud-Native Engineering, and AI-Powered Operations into a unified architecture that mirrors real-world enterprise and fintech infrastructure patterns.

@@ -11,6 +11,6 @@ resource "aws_secretsmanager_secret_version" "db_credentials" {
 
   secret_string = jsonencode({
     username = "admin"
-    password = "admin@123"
+    password = "var.db_password"
   })
 }

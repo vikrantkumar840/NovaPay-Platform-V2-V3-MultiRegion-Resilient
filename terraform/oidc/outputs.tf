@@ -1,11 +1,7 @@
-output "primary_cluster_name" {
-  value = var.primary_cluster_name
+output "oidc_provider_arn" {
+  value = aws_iam_openid_connect_provider.eks.arn
 }
 
-output "dr_cluster_name" {
-  value = var.dr_cluster_name
-}
-
-output "irsa_foundation_policy_arn" {
-  value = aws_iam_policy.irsa_foundation.arn
+output "oidc_provider_url" {
+  value = aws_iam_openid_connect_provider.eks.url
 }
