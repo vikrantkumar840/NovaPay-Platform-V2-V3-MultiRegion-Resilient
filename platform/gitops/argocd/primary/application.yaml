@@ -8,7 +8,7 @@ spec:
   project: novapay-primary
 
   source:
-    repoURL: https://github.com/vikrantkumar840/NovaPay-Platform-V2-MultiRegion-Resilient.git
+    repoURL: https://github.com/vikrantkumar840/NovaPay-Platform-V2-V3-MultiRegion-Resilient.git    
     targetRevision: main
     path: kubernetes/primary
 

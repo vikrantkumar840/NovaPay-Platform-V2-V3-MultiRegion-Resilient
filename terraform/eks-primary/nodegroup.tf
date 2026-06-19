@@ -20,9 +20,9 @@ resource "aws_eks_node_group" "primary" {
   capacity_type = "ON_DEMAND"
 
   tags = {
-    Environment = var.environment
-    Project     = "NovaPay-V2"
-    "k8s.io/cluster-autoscaler/enabled"           = "true"
-    "k8s.io/cluster-autoscaler/novapay-primary-eks" = "owned"  
+    Environment                                     = var.environment
+    Project                                         = "NovaPay-V2"
+    "k8s.io/cluster-autoscaler/enabled"             = "true"
+    "k8s.io/cluster-autoscaler/novapay-primary-eks" = "owned"
   }
 }

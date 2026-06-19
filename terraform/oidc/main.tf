@@ -1,6 +1,4 @@
-data "aws_eks_cluster" "primary" {
-  name = var.primary_cluster_name
-}
+
 
 resource "aws_iam_openid_connect_provider" "eks" {
   url = data.aws_eks_cluster.primary.identity[0].oidc[0].issuer

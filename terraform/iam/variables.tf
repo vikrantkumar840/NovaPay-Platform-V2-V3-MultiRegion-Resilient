@@ -5,4 +5,3 @@ variable "environment" {
 variable "project_name" {
   default = "NovaPay-V2"
 }
-

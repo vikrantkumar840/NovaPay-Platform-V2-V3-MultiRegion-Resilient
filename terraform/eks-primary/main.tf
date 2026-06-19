@@ -15,9 +15,9 @@ resource "aws_eks_cluster" "primary" {
   role_arn = var.cluster_role_arn
 
   vpc_config {
-    subnet_ids = data.terraform_remote_state.network.outputs.private_subnets 
+    subnet_ids              = data.terraform_remote_state.network.outputs.private_subnets
     endpoint_private_access = true
-    endpoint_public_access  = true  
+    endpoint_public_access  = true
   }
 
   tags = {
